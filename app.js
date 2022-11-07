@@ -42,37 +42,33 @@ addMushroomButton.addEventListener('click', () => {
 });
 
 addFriendButton.addEventListener('click', () => {
-    // get the name from the input
     const name = friendInputEl.value;
-    // create a new friend object
+
     const newFriend = {
         name: name || `Friend #${Math.floor(Math.random() * 1000)}`,
         satisfaction: 1,
     };
-    // push it into the friends state array, passed in as an argument
+
     friendData.push(newFriend);
-    // reset the input
+
     friendInputEl.value = '';
-    // display all the friends (use a function here)
+
     displayFriends();
 });
 
 function displayFriends() {
-    // clear out the friends in DOM
     friendsEl.textContent = '';
-    // for each friend in state . . .
+
     for (let friend of friendData) {
-        // use renderFriend to make a friendEl
         const friendEl = renderFriend(friend);
-        // this is a clickable list, so . . .
-        //     add an event listener to each friend
+
         friendEl.addEventListener('click', () => {
             const friendInState = findFriendByName(friend.name, friendData);
-            //         and if the friend's satisfaction level is below 3 and you have mushrooms left
+
             if (mushroomCount === 0) {
                 alert('no more mushrooms! Go forage for some more');
             }
-            //             increment the friends satisfaction and decrement your mushrooms
+
             if (mushroomCount > 0 && friendInState.satisfaction < 3) {
                 friendInState.satisfaction++;
                 mushroomCount--;
@@ -83,15 +79,11 @@ function displayFriends() {
         });
         friendsEl.append(friendEl);
     }
-    //             then display your friends and mushrooms with the updated state
-    // append the friendEl to the friends list in DOM
 }
 
 function displayMushrooms() {
-    // clear out the mushroom div
     mushroomsEl.textContent = '';
     for (let i = 0; i < mushroomCount; i++) {
-        // for each mushroom in your mushroom state, render and append a mushroom
         const mushroomEl = renderMushroom();
         mushroomsEl.append(mushroomEl);
     }
