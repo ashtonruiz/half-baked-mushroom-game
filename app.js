@@ -1,6 +1,6 @@
 // import functions and grab DOM elements
 import { renderMushroom, renderFriend } from './render-utils.js';
-import { addFriend, friendFriendsByName } from './data-utils.js';
+import { addFriend, friendFriendByName, friendFriendsByName } from './data-utils.js';
 
 const friendsEl = document.querySelector('.friends');
 const friendInputEl = document.getElementById('friend-input');
@@ -51,17 +51,31 @@ addFriendButton.addEventListener('click', () => {
 
 function displayFriends() {
     // clear out the friends in DOM
-
+    friendsEl.textContent = '';
     // for each friend in state . . .
     for (let friend of friendData) {
         // use renderFriend to make a friendEl
+        const friendEl = renderFriend(friend);
         // this is a clickable list, so . . .
         //     add an event listener to each friend
-        //         and if the friend's satisfaction level is below 3 and you have mushrooms left
-        //             increment the friends satisfaction and decrement your mushrooms
-        //             then display your friends and mushrooms with the updated state
-        // append the friendEl to the friends list in DOM
+        friendEl.addEventListener('click', () => {
+            const friendInState = friendFriendByName(friend.name, friendData);
+            //         and if the friend's satisfaction level is below 3 and you have mushrooms left
+            if (mushroomCount === 0) {
+                alert('no more mushrooms! Go forage for some more');
+            }
+            //             increment the friends satisfaction and decrement your mushrooms
+            if (mushroomCount > 0 && friendInState.satisfaction < 3) {
+                friendInState.satisfaction++;
+                mushroomCount--;
+
+                displayFriends();
+                displayMushrooms();
+            }
+        });
     }
+    //             then display your friends and mushrooms with the updated state
+    // append the friendEl to the friends list in DOM
 }
 
 function displayMushrooms() {
