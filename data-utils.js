@@ -6,7 +6,7 @@ export function addFriend(name, friends) {
     friends.push(newFriend);
 }
 
-export function friendFriendByName(name, friends) {
+export function findFriendByName(name, friends) {
     for (let friend of friends) {
         if (friend.name === name) {
             return friend;
