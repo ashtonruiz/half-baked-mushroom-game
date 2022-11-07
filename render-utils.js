@@ -1,6 +1,9 @@
 export function renderMushroom() {
     const div = document.createElement('div');
-    div.classList.add('mushroom-porcini');
+    const randomShrooms = ['porcini', 'fungus', 'chanterelle', 'morel'];
+    const randomShroom = randomShrooms[Math.floor(Math.random() * 3)];
+
+    div.classList.add(`mushroom-${randomShroom}`);
 
     return div;
 }
